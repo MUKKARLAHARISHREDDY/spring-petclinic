@@ -1,17 +1,22 @@
 pipeline {
-    agent any
+    agent { label 'OPENJDK-11-JDK' }
     stages {
-        stage('test') {
+        stage('vcs') {
             steps {
-                sh 'echo hello'
+                git url: 'https://github.com/MUKKARLAHARISHREDDY/spring-petclinic.git',
+                branch:'main'
             }
         }
-        stage('learning') {
+        stage('build') {
             steps {
-                agent { label 'OPENJDK-11-JDK' }
-                git url: 'https://github.com/MUKKARLAHARISHREDDY/spring-petclinic.git',
-                    branch: 'master'
+                sh 'mvn -Dmaven.test.failure.ignore=true install'
+            }
+        }
+        stage('archive results') {
+            steps {
+                junit 'target/surefire-reports/**/*.xml'
             }
         }
     }
-}
+} 
+
