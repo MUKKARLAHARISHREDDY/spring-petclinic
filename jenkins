@@ -14,7 +14,7 @@ pipeline {
         }
         stage('build') {
             steps {
-                mvn clean install package -Dproject.version=10 -Dsvn.version=1
+                h "/opt/apache-maven -version/bin/mvn ${params.MAVEN_GOAL}"
 
             }
         }
