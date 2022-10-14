@@ -14,7 +14,7 @@ pipeline {
         }
         stage('build') {
             steps {
-                h "/opt/apache-maven-3.6.3/bin/mvn ${params.MAVEN_GOAL}"
+                sh  "maven ${params.MAVEN_GOAL}"
 
             }
         }
