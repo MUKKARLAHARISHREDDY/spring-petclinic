@@ -2,19 +2,19 @@ pipeline {
     agent { label 'OPENJDK-11-JDK' }
     parameters {
         choice(name: 'BRANCH_TO_BUILD', choices: ['main'], description: 'Branch to build')
-        string(name: 'MAVEN_GOAL', defaultValue: '-version', description: 'maven goal')
+        string(name: 'MAVEN_GOAL', defaultValue: 'package', description: 'maven goal')
 
     }
     stages {
         stage('vcs') {
             steps {
                 git url: 'https://github.com/MUKKARLAHARISHREDDY/spring-petclinic.git',
-                branch:'main'
+                branch: "${params.BRANCH_TO_BUILD}"
             }
         }
         stage('build') {
             steps {
-                sh "mvn -version.test.failure.ignore=true install"
+                mvn clean install package -Dproject.version=10 -Dsvn.version=1
 
             }
         }
