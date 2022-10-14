@@ -1,5 +1,10 @@
 pipeline {
     agent { label 'OPENJDK-11-JDK' }
+    parameters {
+        choice(name: 'BRANCH_TO_BUILD', choices: ['main'], description: 'Branch to build')
+        string(name: 'MAVEN_GOAL', defaultValue: 'package', description: 'maven goal')
+
+    }
     stages {
         stage('vcs') {
             steps {
@@ -9,7 +14,7 @@ pipeline {
         }
         stage('build') {
             steps {
-                sh 'mvn -Dmaven.test.failure.ignore=true install'
+                sh 'mvn ${params.MAVEN_GOAL}.test.failure.ignore=true install'
             }
         }
         stage('archive results') {
