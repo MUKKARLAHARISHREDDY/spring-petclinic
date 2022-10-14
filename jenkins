@@ -1,10 +1,17 @@
-node {
-    stage('test') {
-        sh 'echo hello'
-    }
-    stage('learning') {
-        git url: 'https://github.com/MUKKARLAHARISHREDDY/spring-petclinic.git',
-        branch: 'main'
-
+pipeline {
+    agent any
+    stages {
+        stage('test') {
+            steps {
+                sh 'echo hello'
+            }
+        }
+        stage('learning') {
+            steps {
+                agent { label 'OPENJDK-11-JDK' }
+                git url: 'https://github.com/MUKKARLAHARISHREDDY/spring-petclinic.git',
+                    branch: 'master'
+            }
+        }
     }
 }
