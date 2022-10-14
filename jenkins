@@ -14,8 +14,14 @@ pipeline {
         }
         stage('build') {
             steps {
-                sh "${env.mvnHome}/bin/mvn install"
+                sh "${env.mvnHome}/bin/mvn install",
+                sh "mvn -Dmaven.test.failure.ignore=true install"
+
             }
+             stage('Deploy') {
+        
+        sh "${env.mvnHome}/bin/mvn deploy"
+    }
         }
         stage('archive results') {
             steps {
