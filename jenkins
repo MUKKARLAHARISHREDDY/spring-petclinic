@@ -2,4 +2,9 @@ node {
     stage('test') {
         sh 'echo hello'
     }
+    stage('learning') {
+        git url: 'https://github.com/MUKKARLAHARISHREDDY/game-of-life.git',
+        branch: 'main'
+
+    }
 }
