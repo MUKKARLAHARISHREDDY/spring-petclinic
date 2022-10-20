@@ -1,21 +1,18 @@
-pipeline {
-    agent { label 'OPENJDK-11-JDK' }
-    parameters {
-        choice(name: 'BRANCH_TO_BUILD', choices: ['main'], description: 'Branch to build')
-        string(name: 'MAVEN_GOAL', defaultValue: 'package', description: 'maven goal')
 
-    }
+pipeline {
+    agent { label 'NODE-JS' }
     stages {
         stage('vcs') {
             steps {
-                git url: 'https://github.com/MUKKARLAHARISHREDDY/spring-petclinic.git',
-                branch: "${params.BRANCH_TO_BUILD}"
+                git url: 'https://github.com/MUKKARLAHARISHREDDY/js-e2e-express-server.git',
+                branch:'main'
             }
         }
         stage('build') {
             steps {
-                sh 'mvn -Dmaven.test.failure.ignore=true install'
-
+                sh  """export $PATH=/var/lib/jenkins/.nvm/versions/node/v16.18.0/bin:$PATH"
+                npm install
+                npm run build"""
             }
         }
         stage('archive results') {
