@@ -14,6 +14,7 @@ pipeline {
             steps {
                 mail subject:'build started for jenkins JOB $env.JOB_NAME',
                 body:'build started for jenkins JOB $env.JOB_NAME',
+                to : 'mukkarlaharishreddy302@gmail.com'
                 git url: 'https://github.com/MUKKARLAHARISHREDDY/spring-petclinic.git',
                 branch: "${params.BRANCH_TO_BUILD}"
             }
