@@ -1,6 +1,6 @@
 
 pipeline {
-    agent { label 'NODE-JS' }
+    agent { label 'OPENJDK-11-JDK' }
     stages {
         stage('vcs') {
             steps {
